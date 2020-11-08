@@ -15,7 +15,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - sp-net
+      - shinyproxy-net
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   certbot:
     image: certbot/certbot
@@ -24,24 +24,23 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     networks:
-      - sp-net
+      - shinyproxy-net
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   shinyproxy:
-    image: YOUR_USERNAME/shinyproxy-example
+    image: dufflab/shinyproxy:openjdk8-v1
     depends_on:
-      - euler
+      - gene-funnel-selective-vulnerability
     container_name: shinyproxy
     expose:
       - 8080
     volumes:
-      - ./application/application.yml:/opt/shinyproxy/application.yml
+      - ./storage/application.yml:/opt/shinyproxy/application.yml
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - sp-net
-  euler:
-    image: YOUR_USERNAME/shiny-euler-app
+      - shinyproxy-net
+  gene-funnel-selective-vulnerability:
+    image: dufflab/gene-funnel-shiny:R4.0.2-gene-funnel-selective-vulnerability-v1
 
 networks:
-  sp-net:
-    name: sp-net
-    
+  shinyproxy-net:
+    name: shinyproxy-net
