@@ -1,0 +1,8 @@
+data
+docker-compose.yml
+.git
+init-letsencrypt.sh
+LICENSE
+README.md
+tree.txt
+.gitignore
