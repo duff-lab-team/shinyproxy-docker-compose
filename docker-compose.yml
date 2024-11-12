@@ -27,19 +27,14 @@ services:
       - shinyproxy-net
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   shinyproxy:
-    image: dufflab/shinyproxy:openjdk8-v1
-    depends_on:
-      - gene-funnel-selective-vulnerability
+    image: dufflab/shinyproxy:v1
     container_name: shinyproxy
     expose:
       - 8080
     volumes:
-      - ./storage/application.yml:/opt/shinyproxy/application.yml
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - shinyproxy-net
-  gene-funnel-selective-vulnerability:
-    image: dufflab/gene-funnel-shiny:R4.0.2-gene-funnel-selective-vulnerability-v1
 
 networks:
   shinyproxy-net:
