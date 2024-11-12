@@ -19,21 +19,21 @@ proxy:
     description: Integrated Transcriptomic and Proteomic Analysis of Tangle Bearing Neurons in Alzheimer's Disease
     container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/tangle-bearing-neurons-viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
     container-image: dufflab/tangle-bearing-neurons-viewer:v1
-    access-groups: nember
+    access-groups: member
     container-network: shinyproxy-net
   - id: genefunnel-benchmarks-viewer
     display-name: GeneFunnel Benchmarks Viewer
     description: Benchmarks and Exploration of the GeneFunnel Pathway Enrichment Method
     container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
     container-image: dufflab/genefunnel-benchmarks-viewer:v1
-    access-groups: nember
+    access-groups: member
     container-network: shinyproxy-net
   - id: tau-mutant-snrnaseq-viewer
     display-name: Tau Mutant snRNAseq Viewer
     description: Single-nucleus RNAseq Analysis of Tau Mutant Lines
     container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/comb/comb_04viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
     container-image: dufflab/tau-mutant-snrnaseq-viewer:v1
-    access-groups: nember
+    access-groups: member
     container-network: shinyproxy-net
 
 logging:
