@@ -1,0 +1,48 @@
+proxy:
+  title: Duff Lab Data Resources
+  template-path: ./templates/1col
+  container-wait-time: 600000
+  heartbeat-rate: 10000
+  heartbeat-timeout: 3600000
+  port: 8080
+  authentication: none
+  admin-groups: member
+  users:
+  - name: dufflab
+    password: enrichment
+    groups: member
+  docker:
+    internal-networking: true
+  specs:
+  - id: tangle-bearing-neurons-viewer
+    display-name: Tangle Bearing Neurons Viewer
+    description: Integrated Transcriptomic and Proteomic Analysis of Tangle Bearing Neurons in Alzheimer's Disease
+    container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/tangle-bearing-neurons-viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
+    container-image: dufflab/tangle-bearing-neurons-viewer:v1
+    access-groups: nember
+    container-network: shinyproxy-net
+  - id: genefunnel-benchmarks-viewer
+    display-name: GeneFunnel Benchmarks Viewer
+    description: Benchmarks and Exploration of the GeneFunnel Pathway Enrichment Method
+    container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
+    container-image: dufflab/genefunnel-benchmarks-viewer:v1
+    access-groups: nember
+    container-network: shinyproxy-net
+  - id: tau-mutant-snrnaseq-viewer
+    display-name: Tau Mutant snRNAseq Viewer
+    description: Single-nucleus RNAseq Analysis of Tau Mutant Lines
+    container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/comb/comb_04viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
+    container-image: dufflab/tau-mutant-snrnaseq-viewer:v1
+    access-groups: nember
+    container-network: shinyproxy-net
+  - id: otero-garcia-2022-ssrnaseq-viewer
+    display-name: Otero-garcia Tangle-bearing Neuron ssRNAseq Viewer
+    description: Single-soma RNAseq Analysis of Tangle-bearing (NFT) Neurons
+    container-cmd: ["R", "-e", "rmarkdown::run('/root/results/R/comb_03viewer.Rmd', shiny_args = list(port = 3838, host = '0.0.0.0'))"]
+    container-image: dufflab/otero-garcia-2022-ssrnaseq-viewer:v1
+    access-groups: nember
+    container-network: shinyproxy-net
+
+logging:
+  file:
+    shinyproxy.log
